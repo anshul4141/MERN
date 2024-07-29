@@ -1,4 +1,3 @@
-// services/userService.js
 const User = require('../bean/userBean');
 
 const addUser = (userData) => {
@@ -20,10 +19,10 @@ const updateUser = (userId, updateData) => {
 const deleteUser = (userId) => {
     return User.findByIdAndDelete(userId)
         .then(deletedUser => {
-            if (!deletedUser) throw new Error('User not found');
-            return { message: 'User deleted successfully' };
-        })
-        .catch(error => { throw new Error(error.message); });
+        if (!deletedUser) throw new Error('User not found');
+        return { message: 'User deleted successfully' };
+    })
+    .catch(error => { throw new Error(error.message); });
 };
 
 const getUserById = (userId) => {
@@ -36,7 +35,6 @@ const getUserById = (userId) => {
 };
 
 const searchUsers = (query) => {
-    console.log('in search routing');
     return User.find(query)
         .then(users => users)
         .catch(error => { throw new Error(error.message); });
@@ -46,7 +44,7 @@ const authenticateUser = (loginId, password) => {
     return User.findOne({ loginId, password })
         .then(user => {
             if (!user) throw new Error('Invalid credentials');
-            return { message: 'Authentication successful', user };
+            return user;
         })
         .catch(error => { throw new Error(error.message); });
 };
